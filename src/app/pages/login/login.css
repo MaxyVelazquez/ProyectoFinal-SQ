@@ -1,0 +1,75 @@
+* {
+  font-family: 'Fredoka One', cursive;
+}
+
+.fondo {
+  background-color: #4A6FE3;
+}
+
+.card-login {
+  background-color: #E8353A;
+  border-radius: 32px;
+  width: 480px;
+}
+
+.titulo {
+  color: white;
+  font-size: 2.8rem;
+  border-bottom: 2px solid white;
+  padding-bottom: 8px;
+}
+
+.subtitulo {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.input-dino {
+  background-color: #B8C4E8;
+  border-radius: 50px;
+  padding: 10px 20px;
+}
+
+.icono {
+  font-size: 1.6rem;
+}
+
+.campo {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  font-family: 'Fredoka One', cursive;
+  color: #2c3e50;
+  width: 100%;
+}
+
+.campo::placeholder {
+  color: #4a5568;
+}
+
+.btn-ingresar {
+  background-color: #F5C518;
+  border: none;
+  border-radius: 50px;
+  padding: 14px;
+  font-size: 1.4rem;
+  font-family: 'Fredoka One', cursive;
+  font-weight: bold;
+  color: #2c2c2c;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn-ingresar:hover {
+  transform: scale(1.03);
+  background-color: #e0b015;
+}
+
+.alert-error {
+  background-color: #7a0000;
+  color: white;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 1rem;
+}
