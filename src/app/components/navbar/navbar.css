@@ -1,0 +1,41 @@
+.navbar-dino {
+  background-color: #F5C518;
+  height: 64px;
+  font-family: 'Fredoka One', cursive;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  color: #1a1a2e;
+  font-weight: bold;
+}
+
+.nav-link-dino {
+  font-size: 1.3rem;
+  color: #1a1a2e;
+  text-decoration: none;
+}
+
+.nav-link-dino:hover {
+  color: #E8353A;
+}
+
+.nav-usuario {
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+
+@media (max-width: 991px) {
+  .navbar-dino {
+    height: auto;        
+    padding-bottom: 12px;
+  }
+
+  .nav-link-dino {
+    padding: 8px 0;
+    display: block;      
+  }
+}
+

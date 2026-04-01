@@ -21,6 +21,7 @@ export class Login {
   onLogin(){
     if(this.auth.login(this.username, this.password)){
       this.router.navigate(['/home']);
+      
     }else{
       this.error="Usuario o contraseña incorrectos";
     }

@@ -11,6 +11,7 @@ export class AuthService {
   login(username:string, password:string):boolean{
     if(username === this.USER && password === this.PASS){
       localStorage.setItem('sesion', 'true');
+      localStorage.setItem('usuario', username);
       return true;
     }
     return false;
@@ -23,5 +24,9 @@ export class AuthService {
 
   isLoggedIn():boolean{
     return localStorage.getItem('sesion') === 'true';
+  }
+
+  getUser():string{
+    return localStorage.getItem('usuario') ?? 'invitado';
   }
 }
