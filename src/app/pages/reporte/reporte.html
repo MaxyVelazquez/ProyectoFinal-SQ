@@ -1,1 +1,16 @@
-<p>reporte works!</p>
+<app-navbar></app-navbar>
+
+<div class="fondo d-flex justify-content-evenly align-items-center vh-100 gap-4">
+  <div class="card-grafica p-2 text-center">
+    <h2  class="my-3">Este mes</h2>
+    <canvas class="mx-4" baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      type="line">
+    </canvas>
+    <button class="btn-detalles w-75 mt-4" >Detalles</button>
+  </div>
+
+  
+
+</div>
