@@ -1,0 +1,38 @@
+.fondo{
+    background-color: #5271ff;
+    font-family: 'Bryndan Write', sans-serif;
+}
+
+h2{
+    color: white;
+    font-size: 2.8rem;
+}
+
+.card-grafica {
+  background-color: #ff3131;
+  border: 1px solid #1800ad;
+  border-radius: 32px;
+  width: 600px;
+  height: 500px;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-detalles {
+  background-color: #ffd21f;
+  border: none;
+  border-radius: 15px;
+  border: 1px solid #cca300;
+  padding: 14px;
+  font-size: 1.4rem;
+  font-family: 'Bryndan Write', sans-serif;
+  font-weight: bold;
+  color: #00167a;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-detalles:hover {
+  transform: scale(1.03);
+  background-color: #e0b015;
+}

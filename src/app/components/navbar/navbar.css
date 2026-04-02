@@ -1,18 +1,20 @@
 .navbar-dino {
-  background-color: #F5C518;
+  background-color: #ffd21f;
   height: 64px;
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Bryndan Write', sans-serif;
+  box-shadow: 0px 7px 8px rgba(0, 0, 0, 0.3);
+
 }
 
 .nav-brand {
   font-size: 1.5rem;
-  color: #1a1a2e;
+  color: #00167a;
   font-weight: bold;
 }
 
 .nav-link-dino {
   font-size: 1.3rem;
-  color: #1a1a2e;
+  color: #00167a;
   text-decoration: none;
 }
 
@@ -22,7 +24,7 @@
 
 .nav-usuario {
   font-size: 1.1rem;
-  color: #1a1a2e;
+  color: #00167a;
   white-space: nowrap;
 }
 
