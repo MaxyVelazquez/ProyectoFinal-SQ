@@ -1,7 +1,53 @@
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
 <app-navbar>
-  <div class="container mt-5">
-    <h2>¡Bienvenido! 🎉</h2>
-    <p class="text-muted">Has iniciado sesión correctamente.</p>
+  
+  <div class="fondo d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 64px);">
+    <div *ngIf="!ordenActual" class="text-center">
+      <p class="sin-orden">Sin DinoOrdenes por el momento</p>
+      <button class="ctn-amarillo" (click)="crearOrden()">Crear Orden</button>
+    </div>
+  </div>
+
+  <div class="w-100 px-4 pt-4" *ngIf="ordenActual">
+    <h2 class="titulo-orden text-center mb-4">Orden #{{ordenActual.id}}</h2>
+
+
+    <div class="d-flex gap-4 justofy-content-center">
+
+      <div class="tabla-container">
+        <table class="tabla-dino w-100">
+          <thead>
+            <tr class="fila-header">
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fila-roja">
+              <td>Quesadilla</td>
+              <td>{{ordenActual.quesadillas}}</td>
+              <td>{{ordenActual.precioQ}}</td>
+            </tr>
+            <tr class="fila-blanca">
+              <td>DinoNugget</td>
+              <td>{{ordenActual.nuggets}}</td>
+              <td>{{ordenActual.precioN}}</td>
+            </tr>
+            <tr class="fila-total">
+              <td colspan="2">Total</td>
+              <td>{{ordenActual.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex flex-column gap-3">
+        <button class="btn-accion">Editar</button>
+        <button class="btn-accion">Eliminar</button>
+        <button class="btn-accion">Pagar</button>
+      </div>
+    </div>
   </div>
 </app-navbar>
 
