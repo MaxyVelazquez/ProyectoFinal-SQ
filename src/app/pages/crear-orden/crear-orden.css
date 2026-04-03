@@ -103,3 +103,25 @@
   width: 360px;
   font-family: 'Bryndan Write', sans-serif;
 }
+
+.card-con-dinos {
+  display: flex;
+  align-items: flex-end; 
+  gap: 24px;
+  position: relative;
+}
+
+.dino {
+  width: 300px;       /* ajusta el tamaño a tu gusto */
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.t-rex {
+  
+  margin-bottom: 30px;   /* ajusta para que quede a la altura que quieras */
+}
+
+.velociraptor {
+  margin-bottom: -130px;
+}
