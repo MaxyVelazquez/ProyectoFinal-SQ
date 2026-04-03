@@ -1,18 +1,17 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BaseChartDirective} from 'ng2-charts';
-import {ChartOptions, ChartData } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables, ChartOptions, ChartData } from 'chart.js';
 import { Navbar } from '../../components/navbar/navbar';
 
-
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-reporte',
   standalone: true,
   imports: [Navbar, CommonModule, BaseChartDirective],
   templateUrl: './reporte.html',
-  styleUrl: './reporte.css'
-  
+  styleUrl: './reporte.css',
 })
 export class Reporte implements OnInit {
 
