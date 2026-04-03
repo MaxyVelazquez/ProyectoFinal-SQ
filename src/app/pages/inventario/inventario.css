@@ -1,0 +1,41 @@
+.fondo{
+    background-color: #5271ff;
+    font-family: 'Bryndan Write', sans-serif;
+}
+
+h2, p{
+    color: white;
+}
+
+p{
+    font-size: 1.5rem;
+}
+
+
+.card {
+  background-color: #ff3131;
+  border: 1px solid #1800ad;
+  border-radius: 32px;
+  width: 500px;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-agregar {
+  background-color: #ffd21f;
+  border: none;
+  border-radius: 15px;
+  border: 1px solid #cca300;
+  padding: 14px;
+  font-size: 1.4rem;
+  font-family: 'Bryndan Write', sans-serif;
+  font-weight: bold;
+  color: #00167a;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-agregar:hover {
+  transform: scale(1.03);
+  background-color: #e0b015;
+}
