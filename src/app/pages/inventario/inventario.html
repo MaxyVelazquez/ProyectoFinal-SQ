@@ -7,7 +7,7 @@
         <div class="card card-quesadilla p-5 text-center">
             <h2>Quesadilla</h2>
             <p id="cantQuesadilla">x{{ cantQuesadillas }}</p>
-            <button class="btn-agregar w-100 mt-4 mt-auto" (click)="agregarQuesadilla()">Agregar</button>
+            <button class="btn-agregar w-100 mt-4 mt-auto" (click)="abrirModal('Quesadilla')">Agregar</button>
         </div>
     </div>
 
@@ -18,9 +18,16 @@
         <div class="card card-nuget p-5 text-center d-flex flex-column">
             <h2>Nuget</h2>
             <p id="cantNuget">x{{ cantNugets }}</p>
-            <button class="btn-agregar w-100 mt-4 mt-auto" (click)="agregarNuget()">Agregar</button>
+            <button class="btn-agregar w-100 mt-4 mt-auto" (click)="abrirModal('Nuget')">Agregar</button>
         </div>
     </div>
   
-  
 </div>
+
+
+<app-modal-inventario 
+    [visible]="mostrarModal" 
+    [titulo]="productoSeleccionado"
+    (onConfirmar)="procesarCantidad($event)"
+    (onCerrar)="mostrarModal = false">
+</app-modal-inventario>
