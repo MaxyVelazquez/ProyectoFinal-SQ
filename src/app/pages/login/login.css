@@ -1,15 +1,20 @@
+
+
 * {
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Bryndan Write', sans-serif;
 }
 
+
 .fondo {
-  background-color: #4A6FE3;
+  background-color: #5271ff;
 }
 
 .card-login {
-  background-color: #E8353A;
+  background-color: #ff3131;
+  border: 1px solid #1800ad;
   border-radius: 32px;
   width: 480px;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 .titulo {
@@ -25,9 +30,11 @@
 }
 
 .input-dino {
-  background-color: #B8C4E8;
-  border-radius: 50px;
+  background-color: #c2cdff;
+  border-radius: 15px;
+  border: 1px solid #5271ff;
   padding: 10px 20px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .icono {
@@ -39,26 +46,28 @@
   border: none;
   outline: none;
   font-size: 1.2rem;
-  font-family: 'Fredoka One', cursive;
-  color: #2c3e50;
+  font-family: 'Bryndan Write', sans-serif;
+  color: #00167a;
   width: 100%;
 }
 
 .campo::placeholder {
-  color: #4a5568;
+  color: #00167a;
 }
 
 .btn-ingresar {
-  background-color: #F5C518;
+  background-color: #ffd21f;
   border: none;
-  border-radius: 50px;
+  border-radius: 15px;
+  border: 1px solid #cca300;
   padding: 14px;
   font-size: 1.4rem;
-  font-family: 'Fredoka One', cursive;
+  font-family: 'Bryndan Write', sans-serif;
   font-weight: bold;
-  color: #2c2c2c;
+  color: #00167a;
   cursor: pointer;
   transition: transform 0.1s;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-ingresar:hover {
