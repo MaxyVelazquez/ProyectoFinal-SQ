@@ -66,13 +66,7 @@ export class OrdenService {
     return false;
   }
 
-  eliminarOrden(id:number):void{
-    if(id===this.contOrden){
-      this.ordenes.pop();
-    }
-    else{
-      this.ordenes = this.ordenes.filter(orden=>orden.id!==id);
-    }
-
+  eliminarOrden(id: number): void {
+    this.ordenes = this.ordenes.filter(orden => orden.id !== id);
   }
 }

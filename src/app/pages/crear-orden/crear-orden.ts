@@ -6,6 +6,7 @@ import { Navbar } from '../../components/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
+import { InventarioSQ } from '../../services/inventario-sq';
 
 @Component({
   selector: 'app-crear-orden',
@@ -30,8 +31,10 @@ export class CrearOrden {
   ordenId:number=0;
   OrdenAux:Orden | undefined;
   ordenEditar:Orden | undefined;
+  mostrarErrorQ: boolean = false;
+  mostrarErrorN: boolean = false;
 
-  constructor(private ordenService: OrdenService, private router: Router, private authService: AuthService) {
+  constructor(private ordenService: OrdenService, private router: Router, private authService: AuthService, private inventarioService: InventarioSQ) {
     
   }
 
@@ -55,19 +58,48 @@ export class CrearOrden {
     this.mostrarFormQuesadillas = true;
   }
 
+  validarQuesadillas():void{
+    if(Number(this.cantidadQ) > this.inventarioService.getQuesadillas()){
+    this.mostrarErrorQ = true;
+      this.cantidadQ = this.inventarioService.getQuesadillas();
+      (document.getElementById('cantQ') as HTMLInputElement).value = this.cantidadQ.toString();
+    }
+  }
+
   agregarNuggets():void{
     this.mostrarFormNuggets = true;
+  }
+
+  validarNuggets():void{
+    if(Number(this.cantidadN) > this.inventarioService.getNugets()){
+      this.mostrarErrorN = true;
+      this.cantidadN = this.inventarioService.getNugets();
+      (document.getElementById('cantN') as HTMLInputElement).value = this.cantidadN.toString();
+      }
   }
 
   confirmarQuesadilla():void{
     this.quesadillas = this.cantidadQ;
     this.mostrarFormQuesadillas = false;
+    //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
+    this.inventarioService.reducirQuesadillas(this.quesadillas);
   }
 
   confirmarNuggets():void{
     this.nuggets = this.cantidadN;
     this.mostrarFormNuggets = false;
+    //QUITAMOS LOS NUGGETS DEL INVENTARIO
+    this.inventarioService.reducirNugets(this.nuggets);
   }
+
+  cerrarErrorQ():void{
+    this.mostrarErrorQ = false;
+  }
+
+  cerrarErrorN():void{
+    this.mostrarErrorN = false;
+  }
+
 
   crearOrden():void{
     if(this.quesadillas <=0 && this.nuggets <=0){
