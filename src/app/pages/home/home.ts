@@ -85,6 +85,24 @@ export class Home implements OnInit, OnDestroy {
 
   funcionPagar(){
     if(this.ordenActual && this.pagoCliente!==undefined && this.cambio >= 0){
+
+      //Vamos a guardar en el local storage el dia de hoy (dia mes), y las cantidad de qeusadillas, nuggets y total
+      const hoy = new Date();
+      const dia = hoy.getDate();
+      const mes = hoy.getMonth() + 1;
+      const reporteAux = JSON.parse(localStorage.getItem("reporte") || '[]');
+
+      const reporte = {
+        dia: dia,
+        mes: mes,
+        cantidadQuesadillas: this.ordenActual.quesadillas,
+        cantidadNuggets: this.ordenActual.nuggets,
+        total: this.ordenActual.total
+      };
+
+      reporteAux.push(reporte);
+      localStorage.setItem("reporte", JSON.stringify(reporteAux));
+
       this.ordenService.pushOrdenPagada(this.ordenActual!);
       this.ordenService.eliminarOrden(this.ordenActual.id);
       alert(`¡Dino-Pago Exitoso!\nLa Orden ha sido procesada correctamente.`);
@@ -92,6 +110,9 @@ export class Home implements OnInit, OnDestroy {
       this.mostrarPagar=false;
       this.pagoCliente=undefined;
       this.cambio=0;
+
+
+      
 
       this.ordenes=this.ordenService.getOrdenes();
       
