@@ -34,7 +34,7 @@ export class CrearOrden {
   mostrarErrorQ: boolean = false;
   mostrarErrorN: boolean = false;
 
-  constructor(private ordenService: OrdenService, private router: Router, private authService: AuthService, private inventarioService: InventarioSQ) {
+  constructor(private ordenService: OrdenService, private router: Router, private authService: AuthService, public inventarioService: InventarioSQ) {
     
   }
 
@@ -62,7 +62,8 @@ export class CrearOrden {
     if(Number(this.cantidadQ) > this.inventarioService.getQuesadillas()){
     this.mostrarErrorQ = true;
       this.cantidadQ = this.inventarioService.getQuesadillas();
-      (document.getElementById('cantQ') as HTMLInputElement).value = this.cantidadQ.toString();
+      const input = document.getElementById('cantQ') as HTMLInputElement;
+      if(input) input.value = this.cantidadQ.toString();
     }
   }
 
@@ -74,7 +75,8 @@ export class CrearOrden {
     if(Number(this.cantidadN) > this.inventarioService.getNugets()){
       this.mostrarErrorN = true;
       this.cantidadN = this.inventarioService.getNugets();
-      (document.getElementById('cantN') as HTMLInputElement).value = this.cantidadN.toString();
+      const input = document.getElementById('cantN') as HTMLInputElement;
+      if(input) input.value = this.cantidadN.toString();
       }
   }
 

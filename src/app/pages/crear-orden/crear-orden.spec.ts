@@ -6,6 +6,7 @@ import { vi } from 'vitest';
 import { CrearOrden } from './crear-orden';
 import { OrdenService } from '../../services/orden';
 import { AuthService } from '../../services/auth';
+import { InventarioSQ } from '../../services/inventario-sq';
 
 describe('CrearOrden', () => {
 
@@ -21,6 +22,13 @@ describe('CrearOrden', () => {
     deleteOrdenEditar: vi.fn()
   };
 
+  const mockInventarioService = {
+    getQuesadillas: vi.fn().mockReturnValue(5),
+    getNugets: vi.fn().mockReturnValue(3),
+    reducirQuesadillas: vi.fn(),
+    reducirNugets: vi.fn()
+  };
+
   const mockAuthService = {
     login: vi.fn(),
     getUser: vi.fn().mockReturnValue('admin'),
@@ -34,7 +42,8 @@ describe('CrearOrden', () => {
       imports: [CrearOrden, RouterTestingModule],
       providers: [
         { provide: OrdenService, useValue: mockOrdenService },
-        { provide: AuthService, useValue: mockAuthService }
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: InventarioSQ, useValue: mockInventarioService }
       ]
     }).compileComponents();
     router=TestBed.inject(Router);
@@ -149,5 +158,43 @@ describe('CrearOrden', () => {
     expect(component.errorMSG)
       .toBe('Credenciales incorrectas. Intente de nuevo.');
   });
+
+  it('debería limitar cantidadQ al máximo del inventario', () => {
+  mockInventarioService.getQuesadillas.mockReturnValue(5);
+  component.cantidadQ = 10;
+  component.validarQuesadillas();
+  expect(component.cantidadQ).toBe(5);
+  expect(component.mostrarErrorQ).toBe(true);
+});
+
+it('debería limitar cantidadN al máximo del inventario', () => {
+  mockInventarioService.getNugets.mockReturnValue(3);
+  component.cantidadN = 8;
+  component.validarNuggets();
+  expect(component.cantidadN).toBe(3);
+  expect(component.mostrarErrorN).toBe(true);
+});
+
+it('debería cerrar el modal de error de quesadillas', () => {
+  component.mostrarErrorQ = true;
+  component.cerrarErrorQ();
+  expect(component.mostrarErrorQ).toBe(false);
+});
+
+it('debería cerrar el modal de error de nuggets', () => {
+  component.mostrarErrorN = true;
+  component.cerrarErrorN();
+  expect(component.mostrarErrorN).toBe(false);
+});
+
+it('no debería mostrar error si cantidadQ está dentro del inventario', () => {
+  mockInventarioService.getQuesadillas.mockReturnValue(10);
+  component.cantidadQ = 5;
+  component.validarQuesadillas();
+  expect(component.mostrarErrorQ).toBe(false);
+  expect(component.cantidadQ).toBe(5);
+});
+
+
 
 });
