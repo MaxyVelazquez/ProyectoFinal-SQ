@@ -10,7 +10,7 @@
                         <p class="card-cantidad">x{{quesadillas}}</p>
 
                         <div class="form-agregar" *ngIf="mostrarFormQuesadillas">
-                            <input type="number" [(ngModel)]="cantidadQ" class="input-cantidad" min="0" />
+                            <input type="number" [(ngModel)]="cantidadQ" (ngModelChange)="validarQuesadillas()" class="input-cantidad" min="0" id="cantQ"/>
                             <button class="btn-confirmar" (click)="confirmarQuesadilla()">Confirmar</button>
                         </div>
 
@@ -23,7 +23,7 @@
                         <p class="card-cantidad">x{{nuggets}}</p>
 
                         <div class="form-agregar" *ngIf="mostrarFormNuggets">
-                            <input type="number" [(ngModel)]="cantidadN" class="input-cantidad" min="0" />
+                            <input type="number" [(ngModel)]="cantidadN" (ngModelChange)="validarNuggets()" class="input-cantidad" min="0" id="cantN"/>
                             <button class="btn-confirmar" (click)="confirmarNuggets()">Confirmar</button>
                         </div>
                         <button class="btn-amarillo w-100" (click)="agregarNuggets()">Agregar</button>
@@ -64,6 +64,29 @@
                     </div>
                 </div>
             </div>
+                    <!-- Modal Error Quesadillas -->
+            <div class="overlay" *ngIf="mostrarErrorQ">
+                <div class="modal-confirm p-4 text-center">
+                    <h4>Sin inventario</h4>
+                    <p class="text-muted">No hay suficientes Quesaurillas. Cantidad máxima: {{quesadillasAux}}</p>
+                    <div class="d-flex justify-content-center mt-3">
+                    <button class="btn-amarillo px-4" (click)="cerrarErrorQ()">Entendido</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Error Nuggets -->
+            <div class="overlay" *ngIf="mostrarErrorN">
+                <div class="modal-confirm p-4 text-center">
+                    <h4>Sin inventario</h4>
+                    <p class="text-muted">No hay suficientes DinoNuggets. Cantidad máxima: {{nuggetsAux}}</p>
+                    <div class="d-flex justify-content-center mt-3">
+                    <button class="btn-amarillo px-4" (click)="cerrarErrorN()">Entendido</button>
+                    </div>
+                </div>
+                </div>
         </div>
     </div>
+
+    
 </app-navbar>

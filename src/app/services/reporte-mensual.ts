@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 
-/*export class ReporteMensual {
+/*
+export class ReporteMensual {
   getDatos() {
     const reporteAux = JSON.parse(localStorage.getItem("reporte") || '[]');
 

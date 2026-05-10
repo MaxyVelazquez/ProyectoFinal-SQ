@@ -4,24 +4,32 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class InventarioSQ {
-  private quesadillas: number = Number(localStorage.getItem('quesadillas')) || 200;
-  private nugets: number = Number(localStorage.getItem('nugets')) || 300;
+  
 
   setQuesadillas(aux: number): void {
-    this.quesadillas = aux;
     localStorage.setItem('quesadillas', aux.toString());
   }
 
   setNugets(aux: number): void {
-    this.nugets = aux;
     localStorage.setItem('nugets', aux.toString());
   }
 
   getQuesadillas(): number {
-    return this.quesadillas;
+    return Number(localStorage.getItem('quesadillas')) || 0;
   }
 
   getNugets(): number {
-    return this.nugets;
+    return Number(localStorage.getItem('nugets')) || 0;
   }
+
+
+  reducirQuesadillas(cantidad: number): void {
+  const actual = Number(localStorage.getItem('quesadillas')) || 0;
+  localStorage.setItem('quesadillas', (actual - cantidad).toString());
+}
+
+reducirNugets(cantidad: number): void {
+  const actual = Number(localStorage.getItem('nugets')) || 0;
+  localStorage.setItem('nugets', (actual - cantidad).toString());
+}
 }

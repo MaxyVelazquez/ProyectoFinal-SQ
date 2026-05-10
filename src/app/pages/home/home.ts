@@ -39,6 +39,8 @@ export class Home implements OnInit, OnDestroy {
     console.log(this.ordenes);
   }
 
+  mostrarPagoExitoso: boolean = false;
+
   seleccionarOrden(orden:Orden){
     this.ordenActual = orden;
   }
@@ -105,8 +107,10 @@ export class Home implements OnInit, OnDestroy {
 
       this.ordenService.pushOrdenPagada(this.ordenActual!);
       this.ordenService.eliminarOrden(this.ordenActual.id);
-      alert(`¡Dino-Pago Exitoso!\nLa Orden ha sido procesada correctamente.`);
-      this.ordenActual=undefined;
+      this.ordenes = this.ordenService.getOrdenes();
+      this.ordenActual = this.ordenes.length > 0 ? this.ordenes[0] : undefined;
+
+
       this.mostrarPagar=false;
       this.pagoCliente=undefined;
       this.cambio=0;
@@ -115,9 +119,14 @@ export class Home implements OnInit, OnDestroy {
       
 
       this.ordenes=this.ordenService.getOrdenes();
+      this.mostrarPagoExitoso = true;
       
     }
 
+  }
+
+  cerrarPagoExitoso() {
+    this.mostrarPagoExitoso = false;
   }
 
   ngOnDestroy(): void {
