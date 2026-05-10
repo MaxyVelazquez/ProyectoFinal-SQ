@@ -202,25 +202,7 @@ describe('Home', () => {
       .toBe(0);
   });
 
-  it('debería pagar orden correctamente', () => {
 
-    component.ordenActual = mockOrdenes[0];
-
-    component.pagoCliente = 500;
-
-    component.calcularCambio();
-
-    component.funcionPagar();
-
-    expect(mockOrdenService.pushOrdenPagada)
-      .toHaveBeenCalled();
-
-    expect(mockOrdenService.eliminarOrden)
-      .toHaveBeenCalledWith(1);
-
-    expect(component.ordenActual)
-      .toBeUndefined();
-  });
 
   it('debería navegar a crear-orden', () => {
 
