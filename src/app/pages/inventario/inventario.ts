@@ -22,8 +22,8 @@ export class Inventario implements OnInit {
   constructor(private inventarioService: InventarioSQ) {}
 
   ngOnInit() {
-    this.cantQuesadillas = this.inventarioService.getQuesadillas();
-    this.cantNugets = this.inventarioService.getNugets();   
+    this.cantQuesadillas = this.inventarioService.getProducto(1)?.cantidad ?? 0;
+    this.cantNugets = this.inventarioService.getProducto(2)?.cantidad ?? 0;  
   }
 
   abrirModal(producto: string){
@@ -34,11 +34,11 @@ export class Inventario implements OnInit {
   procesarCantidad(cantidad: number){
     if(this.productoSeleccionado === 'Quesadilla'){
       this.cantQuesadillas += cantidad;
-      this.inventarioService.setQuesadillas(this.cantQuesadillas);
+      this.inventarioService.setCantidad(1, this.cantQuesadillas);
     }
     else{
       this.cantNugets += cantidad;
-      this.inventarioService.setNugets(this.cantNugets);
+      this.inventarioService.setCantidad(2, this.cantNugets);
     }
     this.mostrarModal = false;
   }
