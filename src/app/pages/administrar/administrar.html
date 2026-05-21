@@ -1,6 +1,23 @@
+
 <app-navbar></app-navbar>
 
-<div class="fondo d-flex flex-column align-items-center vh-100 p-5">
-    <h3 >Dino Triste</h3>
-    <p>Algo malo ocurrio</p>  
+<div class="fondo d-flex flex-column align-items-center justify-content-center vh-100 gap-5">
+
+  <div class="botones-grid">
+    <div class="card card-menu p-5 text-center" routerLink="/usuarios">
+      <div class="icono-menu">👤</div>
+      <h2>Usuarios</h2>
+    </div>
+
+    <div class="card card-menu p-5 text-center" routerLink="/productos">
+      <div class="icono-menu">📦</div>
+      <h2>Productos</h2>
+    </div>
+  </div>
+
+  <div class="dino-container">
+    <img src="/imagenes/Dino-Admin.png" alt="Dino Admin" class="dino-img" />
+  </div>
+
 </div>
+
