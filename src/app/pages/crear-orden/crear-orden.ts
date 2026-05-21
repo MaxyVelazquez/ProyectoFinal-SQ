@@ -83,15 +83,13 @@ export class CrearOrden {
   confirmarQuesadilla():void{
     this.quesadillas = this.cantidadQ;
     this.mostrarFormQuesadillas = false;
-    //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
-    this.inventarioService.reducirQuesadillas(this.quesadillas);
+    
   }
 
   confirmarNuggets():void{
     this.nuggets = this.cantidadN;
     this.mostrarFormNuggets = false;
-    //QUITAMOS LOS NUGGETS DEL INVENTARIO
-    this.inventarioService.reducirNugets(this.nuggets);
+    
   }
 
   cerrarErrorQ():void{
@@ -116,8 +114,19 @@ export class CrearOrden {
       this.editar=false;
       this.ordenService.deleteOrdenEditar();
       this.router.navigate(['/home']);
+      //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
+      this.inventarioService.reducirQuesadillas(this.quesadillas);
+      //QUITAMOS LOS NUGGETS DEL INVENTARIO
+      this.inventarioService.reducirNugets(this.nuggets);
       return;
     }
+
+    //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
+    this.inventarioService.reducirQuesadillas(this.quesadillas);
+    //QUITAMOS LOS NUGGETS DEL INVENTARIO
+    this.inventarioService.reducirNugets(this.nuggets);
+
+
     this.ordenService.crearOrden(this.quesadillas, this.nuggets);
     this.router.navigate(['/home']);
 
