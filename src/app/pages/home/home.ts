@@ -8,6 +8,7 @@ import { Orden } from '../../models/orden.model';
 import { Subscription } from 'rxjs';
 import { CrearOrden } from '../crear-orden/crear-orden';
 import { FormsModule } from '@angular/forms';
+import { InventarioSQ } from '../../services/inventario-sq';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class Home implements OnInit, OnDestroy {
   pagoCliente:number | undefined;
   cambio:number=0;
 
-  constructor(private auth: AuthService, private router: Router, private ordenService: OrdenService) {}
+  constructor(private auth: AuthService, private router: Router, private ordenService: OrdenService, public inventarioService: InventarioSQ) {}
 
   ngOnInit() {
     this.ordenes=this.ordenService.getOrdenes();
@@ -48,12 +49,19 @@ export class Home implements OnInit, OnDestroy {
   editarOrden(orden:Orden){
     if(this.ordenActual){
       this.ordenService.saveOrdenEditar(orden.id);
-      
+
+      //Aqui vamos a agregar las quesadillas y nuggets de nuevo al inventario, para que al editar la orden, se pueda modificar la cantidad de quesadillas y nuggets sin que se reste del inventario actual
+      this.inventarioService.setQuesadillas(this.inventarioService.getQuesadillas() + orden.quesadillas);
+      this.inventarioService.setNugets(this.inventarioService.getNugets() + orden.nuggets);
+
       this.router.navigate(['/crear-orden']);
       
     }
     
   }
+
+
+
   confirmareliminarOrden(){
     this.cancelar=true;
     
@@ -118,9 +126,6 @@ export class Home implements OnInit, OnDestroy {
       this.mostrarPagar=false;
       this.pagoCliente=undefined;
       this.cambio=0;
-
-
-      
 
       this.ordenes=this.ordenService.getOrdenes();
       this.mostrarPagoExitoso = true;
