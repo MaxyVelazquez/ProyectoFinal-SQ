@@ -59,9 +59,9 @@ export class CrearOrden {
   }
 
   validarQuesadillas():void{
-    if(Number(this.cantidadQ) > this.inventarioService.getQuesadillas()){
+    if(Number(this.cantidadQ) > this.inventarioService.getCantidad(1)){
     this.mostrarErrorQ = true;
-      this.cantidadQ = this.inventarioService.getQuesadillas();
+      this.cantidadQ = this.inventarioService.getCantidad(1);
       const input = document.getElementById('cantQ') as HTMLInputElement;
       if(input) input.value = this.cantidadQ.toString();
     }
@@ -72,9 +72,9 @@ export class CrearOrden {
   }
 
   validarNuggets():void{
-    if(Number(this.cantidadN) > this.inventarioService.getNugets()){
+    if(Number(this.cantidadN) > this.inventarioService.getCantidad(2)){
       this.mostrarErrorN = true;
-      this.cantidadN = this.inventarioService.getNugets();
+      this.cantidadN = this.inventarioService.getCantidad(2);
       const input = document.getElementById('cantN') as HTMLInputElement;
       if(input) input.value = this.cantidadN.toString();
       }
@@ -115,16 +115,23 @@ export class CrearOrden {
       this.ordenService.deleteOrdenEditar();
       this.router.navigate(['/home']);
       //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
-      this.inventarioService.reducirQuesadillas(this.quesadillas);
+      //this.inventarioService.reducirQuesadillas(this.quesadillas);
+      this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) - this.quesadillas);
+
       //QUITAMOS LOS NUGGETS DEL INVENTARIO
-      this.inventarioService.reducirNugets(this.nuggets);
+      //this.inventarioService.reducirNugets(this.nuggets);
+      this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) - this.nuggets);
       return;
     }
 
     //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
-    this.inventarioService.reducirQuesadillas(this.quesadillas);
+    //this.inventarioService.reducirQuesadillas(this.quesadillas);
+    this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) - this.quesadillas);
+
+
     //QUITAMOS LOS NUGGETS DEL INVENTARIO
-    this.inventarioService.reducirNugets(this.nuggets);
+    //this.inventarioService.reducirNugets(this.nuggets);
+    this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) - this.nuggets);
 
 
     this.ordenService.crearOrden(this.quesadillas, this.nuggets);

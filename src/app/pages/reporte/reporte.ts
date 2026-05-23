@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables, ChartOptions, ChartData } from 'chart.js';
 import { Navbar } from '../../components/navbar/navbar';
 import { ReporteMensual } from '../../services/reporte-mensual';
+import { Injectable } from '@angular/core';
 
 Chart.register(...registerables);
 
@@ -14,6 +15,12 @@ Chart.register(...registerables);
   templateUrl: './reporte.html',
   styleUrl: './reporte.css',
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
+
 export class Reporte implements OnInit {
 
 
