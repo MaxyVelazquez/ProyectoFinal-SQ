@@ -1,23 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Ventas } from './ventas';
 
 @Injectable({
   providedIn: 'root'
 })
 
-/*
-export class ReporteMensual {
-  getDatos() {
-    const reporteAux = JSON.parse(localStorage.getItem("reporte") || '[]');
 
+export class ReporteMensual {
+  private ventasService = inject(Ventas);
+
+  getDatos() {
+    const reporte = this.ventasService.getReporte();
     const agrupado: { [dia: string]: { quesadillas: number, nuggets: number, total: number } } = {};
 
-    for (const item of reporteAux) {
-      if (!agrupado[item.dia]) {
-        agrupado[item.dia] = { quesadillas: 0, nuggets: 0, total: 0 };
+    for (const venta of reporte) {
+      const dia = new Date(venta.fecha).getDate().toString();
+
+      if (!agrupado[dia]) {
+        agrupado[dia] = { quesadillas: 0, nuggets: 0, total: 0 };
       }
-      agrupado[item.dia].quesadillas += item.cantidadQuesadillas;
-      agrupado[item.dia].nuggets += item.cantidadNuggets;
-      agrupado[item.dia].total += item.total;
+
+      agrupado[dia].total += venta.total;
+
+      for (const item of venta.detalle) {
+        if (item.productoId === 1) agrupado[dia].quesadillas += item.cantidad;
+        if (item.productoId === 2) agrupado[dia].nuggets += item.cantidad;
+      }
     }
 
     return Object.entries(agrupado)
@@ -29,7 +37,11 @@ export class ReporteMensual {
         total: valores.total / 100
       }));
   }
-}*/
+}
+
+
+//FORMA MANUAL PARA PRIMERA ENTREGA, 
+/*
 
 export class ReporteMensual {
   getDatos() {
@@ -41,3 +53,5 @@ export class ReporteMensual {
     ];
   }
 }
+
+*/

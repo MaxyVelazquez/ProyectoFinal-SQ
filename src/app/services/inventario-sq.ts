@@ -103,6 +103,13 @@ export class InventarioSQ {
     );
   }
 
+  getCantidad(id: number): number {
+    const result = this.db.query<{ cantidad: number }>(
+      `SELECT cantidad FROM inventario WHERE id = ?`, [id]
+    );
+    return result[0]?.cantidad ?? 0;
+  }
+
   setCantidad(id: number, cantidad: number): void {
     this.db.run(
       `UPDATE inventario SET cantidad = ? WHERE id = ?`,

@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { CrearOrden } from '../crear-orden/crear-orden';
 import { FormsModule } from '@angular/forms';
 import { InventarioSQ } from '../../services/inventario-sq';
+import { Ventas } from '../../services/ventas';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class Home implements OnInit, OnDestroy {
   pagoCliente:number | undefined;
   cambio:number=0;
 
-  constructor(private auth: AuthService, private router: Router, private ordenService: OrdenService, public inventarioService: InventarioSQ) {}
+  constructor(private auth: AuthService, private router: Router, private ordenService: OrdenService, public inventarioService: InventarioSQ, private ventasService: Ventas) {}
 
   ngOnInit() {
     this.ordenes=this.ordenService.getOrdenes();
@@ -52,7 +53,10 @@ export class Home implements OnInit, OnDestroy {
 
       //Aqui vamos a agregar las quesadillas y nuggets de nuevo al inventario, para que al editar la orden, se pueda modificar la cantidad de quesadillas y nuggets sin que se reste del inventario actual
       //this.inventarioService.setQuesadillas(this.inventarioService.getQuesadillas() + orden.quesadillas);
+      this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) + orden.quesadillas);
+
       //this.inventarioService.setNugets(this.inventarioService.getNugets() + orden.nuggets);
+      this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) + orden.nuggets);
 
       this.router.navigate(['/crear-orden']);
       
@@ -100,35 +104,26 @@ export class Home implements OnInit, OnDestroy {
   funcionPagar(){
     if(this.ordenActual && this.pagoCliente!==undefined && this.cambio >= 0){
 
-      //Vamos a guardar en el local storage el dia de hoy (dia mes), y las cantidad de qeusadillas, nuggets y total
-      const hoy = new Date();
-      const dia = hoy.getDate();
-      const mes = hoy.getMonth() + 1;
-      const reporteAux = JSON.parse(localStorage.getItem("reporte") || '[]');
+      const quesadilla = this.inventarioService.getProducto(1);
+      const nugget = this.inventarioService.getProducto(2);
 
-      const reporte = {
-        dia: dia,
-        mes: mes,
-        cantidadQuesadillas: this.ordenActual.quesadillas,
-        cantidadNuggets: this.ordenActual.nuggets,
-        total: this.ordenActual.total
-      };
+      this.ventasService.registrarVenta(this.ordenActual.total, [
+        { productoId: 1, cantidad: this.ordenActual.quesadillas, precioUnitario: quesadilla?.precio ?? 0 },
+        { productoId: 2, cantidad: this.ordenActual.nuggets, precioUnitario: nugget?.precio ?? 0 }
+      ]);
 
-      reporteAux.push(reporte);
-      localStorage.setItem("reporte", JSON.stringify(reporteAux));
-
-      this.ordenService.pushOrdenPagada(this.ordenActual!);
-      this.ordenService.eliminarOrden(this.ordenActual.id);
-      this.ordenes = this.ordenService.getOrdenes();
-      this.ordenActual = this.ordenes.length > 0 ? this.ordenes[0] : undefined;
+        this.ordenService.pushOrdenPagada(this.ordenActual!);
+        this.ordenService.eliminarOrden(this.ordenActual.id);
+        this.ordenes = this.ordenService.getOrdenes();
+        this.ordenActual = this.ordenes.length > 0 ? this.ordenes[0] : undefined;
 
 
-      this.mostrarPagar=false;
-      this.pagoCliente=undefined;
-      this.cambio=0;
+        this.mostrarPagar=false;
+        this.pagoCliente=undefined;
+        this.cambio=0;
 
-      this.ordenes=this.ordenService.getOrdenes();
-      this.mostrarPagoExitoso = true;
+        this.ordenes=this.ordenService.getOrdenes();
+        this.mostrarPagoExitoso = true;
       
     }
 
