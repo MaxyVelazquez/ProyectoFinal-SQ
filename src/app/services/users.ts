@@ -15,25 +15,38 @@ export class Users {
 
 
   getAllUsers(): User[]{
-    return this.db.query<User>(`SELECT * FROM users`);
+    return this.db.query<User>(`SELECT * FROM usuarios`);
   }
 
   getUser(id: number): User | null{
     const result = this.db.query<User>(
-      `SELECT * FROM users WHERE id = ?`, [id]
+      `SELECT * FROM usuarios WHERE id = ?`, [id]
     );
     return result[0] ?? null;
   }
 
   setUser(username: string, password: string): void{
     this.db.run(
-      `INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]
+      `INSERT INTO usuarios (username, password) VALUES (?, ?)`, [username, password]
     );
   }
 
+  updateUser(id: number, username?: string, password?: string): void {
+  if (username) {
+    this.db.run(
+      `UPDATE usuarios SET username = ? WHERE id = ?`, [username, id]
+    );
+  }
+  if (password) {
+    this.db.run(
+      `UPDATE usuarios SET password = ? WHERE id = ?`, [password, id]
+    );
+  }
+}
+
   deleteUser(id: number): void{
     this.db.run(
-      `DELETE FROM users WHERE id = ?`, [id]
+      `DELETE FROM usuarios WHERE id = ?`, [id]
     );
   }
 

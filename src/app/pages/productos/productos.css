@@ -1,0 +1,153 @@
+.fondo {
+  background-color: #5271ff;
+  font-family: 'Bryndan Write', sans-serif;
+  min-height: calc(100vh - 64px);
+  padding: 1rem;
+}
+
+/* Título */
+.titulo-seccion {
+  color: white;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Botón amarillo (igual al del proyecto) */
+.btn-amarillo {
+  background-color: #ffd21f;
+  border: 1px solid #cca300;
+  border-radius: 15px;
+  padding: 10px 24px;
+  font-size: 1.1rem;
+  font-family: 'Bryndan Write', sans-serif;
+  font-weight: bold;
+  color: #00167a;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-amarillo:hover {
+  transform: scale(1.03);
+  background-color: #e0b015;
+}
+
+/* Contenedor de tabla */
+.tabla-container {
+  background-color: #ff3131;
+  border: 1px solid #1800ad;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Tabla */
+.tabla-dino {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tabla-dino th,
+.tabla-dino td {
+  padding: 14px 20px;
+  text-align: left;
+  font-family: 'Bryndan Write', sans-serif;
+  font-size: 1.1rem;
+}
+
+/* Header */
+.fila-header {
+  background-color: #1800ad;
+}
+
+.fila-header th {
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Filas alternadas */
+.fila-roja {
+  background-color: #ff3131;
+}
+
+.fila-roja td {
+  color: white;
+}
+
+.fila-blanca {
+  background-color: #ff6b6b;
+}
+
+.fila-blanca td {
+  color: white;
+}
+
+/* Columna de acciones */
+.td-acciones {
+  width: 60px;
+  text-align: center;
+  position: relative;
+}
+
+.acciones-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón "..." */
+.btn-puntos {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 2px 10px;
+  border-radius: 8px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.btn-puntos:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Menú flotante */
+.menu-flotante {
+  position: fixed;
+  right: 0;
+  top: 110%;
+  background-color: white;
+  border: 1px solid #1800ad;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  min-width: 130px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.opcion-menu {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  text-align: left;
+  font-family: 'Bryndan Write', sans-serif;
+  font-size: 1rem;
+  color: #1800ad;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.opcion-menu:hover {
+  background-color: #f0f0ff;
+}
+
+.opcion-borrar {
+  color: #cc0000;
+  border-top: 1px solid #eee;
+}
+
+.opcion-borrar:hover {
+  background-color: #fff0f0;
+}

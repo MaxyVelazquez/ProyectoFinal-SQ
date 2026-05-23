@@ -13,32 +13,34 @@ import { ModalInventario } from "../../components/modal-inventario/modal-inventa
 })
 export class Inventario implements OnInit {
 
+  productos:any[] = [];
+  mostrarModal = false;
+  productoSeleccionado: any = null;
+
   cantQuesadillas: number = 0;
   cantNugets: number = 0;
 
-  mostrarModal = false;
-  productoSeleccionado = '';
+ 
 
   constructor(private inventarioService: InventarioSQ) {}
 
   ngOnInit() {
-    this.cantQuesadillas = this.inventarioService.getProducto(1)?.cantidad ?? 0;
-    this.cantNugets = this.inventarioService.getProducto(2)?.cantidad ?? 0;  
+    this.cargarProductos(); 
+  }
+  cargarProductos(){
+    this.productos = this.inventarioService.getProductos();
   }
 
-  abrirModal(producto: string){
+  abrirModal(producto: any){
     this.productoSeleccionado = producto;
     this.mostrarModal = true;
   }
 
   procesarCantidad(cantidad: number){
-    if(this.productoSeleccionado === 'Quesadilla'){
-      this.cantQuesadillas += cantidad;
-      this.inventarioService.setCantidad(1, this.cantQuesadillas);
-    }
-    else{
-      this.cantNugets += cantidad;
-      this.inventarioService.setCantidad(2, this.cantNugets);
+    if(this.productoSeleccionado){
+      const nuevaCantidad = this.productoSeleccionado.cantidad + cantidad;
+      this.inventarioService.setCantidad(this.productoSeleccionado.id, nuevaCantidad);
+      this.cargarProductos();
     }
     this.mostrarModal = false;
   }

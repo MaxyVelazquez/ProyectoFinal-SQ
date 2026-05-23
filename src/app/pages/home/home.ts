@@ -51,8 +51,8 @@ export class Home implements OnInit, OnDestroy {
       this.ordenService.saveOrdenEditar(orden.id);
 
       //Aqui vamos a agregar las quesadillas y nuggets de nuevo al inventario, para que al editar la orden, se pueda modificar la cantidad de quesadillas y nuggets sin que se reste del inventario actual
-      this.inventarioService.setQuesadillas(this.inventarioService.getQuesadillas() + orden.quesadillas);
-      this.inventarioService.setNugets(this.inventarioService.getNugets() + orden.nuggets);
+      //this.inventarioService.setQuesadillas(this.inventarioService.getQuesadillas() + orden.quesadillas);
+      //this.inventarioService.setNugets(this.inventarioService.getNugets() + orden.nuggets);
 
       this.router.navigate(['/crear-orden']);
       

@@ -69,6 +69,8 @@ export class QuesaurillasDb {
         cantidad INTEGER NOT NULL
       )
     `);
+    this.db!.run(`INSERT OR IGNORE INTO inventario (id, producto, precio, cantidad) VALUES (1, 'Quesadilla', 0, 0)`);
+    this.db!.run(`INSERT OR IGNORE INTO inventario (id, producto, precio, cantidad) VALUES (2, 'Nugget', 0, 0)`);
     this.db!.run(`
       CREATE TABLE IF NOT EXISTS ventas(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

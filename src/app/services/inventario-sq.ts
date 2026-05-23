@@ -17,7 +17,7 @@ export class InventarioSQ {
 
 
   //USO CON LOCAL STORAGE
-/*
+
 
   setQuesadillas(aux: number): void {
     localStorage.setItem('quesadillas', aux.toString());
@@ -46,7 +46,7 @@ export class InventarioSQ {
     localStorage.setItem('nugets', (actual - cantidad).toString());
   }
 
-  */
+  
 
   //USO CON SQL.JS
 
