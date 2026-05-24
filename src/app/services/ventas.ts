@@ -5,6 +5,7 @@ export interface Venta {
   id: number;
   fecha: string;
   total: number;
+  estado: 'pendiente' | 'pagada' | 'cancelada';
 }
 
 export interface DetalleVenta {
@@ -19,6 +20,7 @@ export interface VentaCompleta {
   id: number;
   fecha: string;
   total: number;
+  estado: 'pendiente' | 'pagada' | 'cancelada';
   detalle: DetalleVenta[];
 }
 
@@ -31,7 +33,7 @@ export class Ventas {
   private db= inject(QuesaurillasDb);
 
   getVentas(): Venta[] {
-    return this.db.query<Venta>(`SELECT * FROM ventas ORDER BY fecha DESC`);
+    return this.db.query<Venta>(`SELECT * FROM ventas WHERE estado= 'pagada' ORDER BY fecha DESC`);
   }
 
 
@@ -51,21 +53,24 @@ export class Ventas {
     }));
   }
 
-
-  registrarVenta(total: number, detalle: {productoId: number, cantidad: number, precioUnitario: number}[]): void{
-    this.db.run(`INSERT INTO ventas (total) VALUES (?)`, [total]);
-
+  crearVentaPendiente(total: number, detalle: {productoId: number, cantidad: number, precioUnitario: number}[]): number {
+    this.db.run(`INSERT INTO ventas(total, estado) VALUES (?, 'pendiente')`, [total]);
     const resultado = this.db.query<{id: number}>(`SELECT last_insert_rowid() as id`);
     const ventaId = resultado[0].id;
-
-
     for(const item of detalle){
       this.db.run(
-        `INSER INTO detalleVentas (ventaId, productoId, cantidad, precioUnitario) VALUES (?,?,?,?,)`,
+        `INSERT INTO detalleVentas (ventaId, productoId, cantidad, precioUnitario) VALUES (?,?,?,?)`,
         [ventaId, item.productoId, item.cantidad, item.precioUnitario]
       );
     }
-
+    return ventaId;
+  }
+  
+  pagarVenta(ventaId: number): void {
+    this.db.run(`UPDATE ventas SET estado = 'pagada' WHERE id = ?`, [ventaId]);
+  }
+  cancelarVenta(ventaId: number): void {
+    this.db.run(`UPDATE ventas SET estado = 'cancelada' WHERE id = ?`, [ventaId]);
   }
 
 

@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
+
 describe('Navbar', () => {
   let component: Navbar;
   let fixture: ComponentFixture<Navbar>;

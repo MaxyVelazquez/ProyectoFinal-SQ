@@ -18,8 +18,8 @@ export class Login {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  onLogin(){
-    if(this.auth.login(this.username, this.password)){
+  async onLogin(){
+    if(await this.auth.login(this.username, this.password)){
       this.router.navigate(['/home']);
       
     }else{

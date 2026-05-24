@@ -17,7 +17,7 @@ export class InventarioSQ {
 
 
   //USO CON LOCAL STORAGE
-/*
+
 
   setQuesadillas(aux: number): void {
     localStorage.setItem('quesadillas', aux.toString());
@@ -46,7 +46,7 @@ export class InventarioSQ {
     localStorage.setItem('nugets', (actual - cantidad).toString());
   }
 
-  */
+  
 
   //USO CON SQL.JS
 
@@ -75,6 +75,13 @@ export class InventarioSQ {
   reducirCantidad(id: number, cantidad: number): void {
     this.db.run(
       `UPDATE inventario SET cantidad = cantidad - ? WHERE id = ?`,
+      [cantidad, id]
+    );
+  }
+
+  returnCantidad(id: number, cantidad: number): void {
+    this.db.run(
+      `UPDATE inventario SET cantidad = cantidad + ? WHERE id = ?`,
       [cantidad, id]
     );
   }

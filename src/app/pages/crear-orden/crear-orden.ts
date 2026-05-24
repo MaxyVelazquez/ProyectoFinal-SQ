@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Orden } from '../../models/orden.model';
 import { OrdenService } from '../../services/orden';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { InventarioSQ } from '../../services/inventario-sq';
   templateUrl: './crear-orden.html',
   styleUrl: './crear-orden.css',
 })
-export class CrearOrden {
+export class CrearOrden implements OnInit {
   quesadillas: number = 0;
   nuggets: number = 0;
   mostrarFormQuesadillas: boolean = false;
@@ -107,33 +107,28 @@ export class CrearOrden {
       return;
     }
     if(this.ordenService.getOrdenById(this.ordenEditar?.id!)&& this.editar){
+      const quesadilla=this.inventarioService.getProducto(1);
+      const nugget=this.inventarioService.getProducto(2);
+      const precioQ=quesadilla?.precio ?? 0;
+      const precioN=nugget?.precio ?? 0;
+
       this.ordenEditar!.quesadillas=this.quesadillas;
       this.ordenEditar!.nuggets=this.nuggets;
-      this.ordenEditar!.total=(this.quesadillas*100) + (this.nuggets*100);
+      this.ordenEditar!.total=(this.quesadillas*precioQ) + (this.nuggets*precioN);
+
+      this.inventarioService.reducirCantidad(1, this.quesadillas);
+      this.inventarioService.reducirCantidad(2, this.nuggets);
+
       this.ordenService.setOrden(this.ordenEditar!);
       this.editar=false;
       this.ordenService.deleteOrdenEditar();
       this.router.navigate(['/home']);
-      //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
-      //this.inventarioService.reducirQuesadillas(this.quesadillas);
-      this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) - this.quesadillas);
-
-      //QUITAMOS LOS NUGGETS DEL INVENTARIO
-      //this.inventarioService.reducirNugets(this.nuggets);
-      this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) - this.nuggets);
       return;
     }
 
-    //QUITAMOS LAS QUESADILLAS DEL INVENTARIO
-    //this.inventarioService.reducirQuesadillas(this.quesadillas);
-    this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) - this.quesadillas);
+    
 
-
-    //QUITAMOS LOS NUGGETS DEL INVENTARIO
-    //this.inventarioService.reducirNugets(this.nuggets);
-    this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) - this.nuggets);
-
-
+    //crearOrden ya maneja la reducciíon del inventario
     this.ordenService.crearOrden(this.quesadillas, this.nuggets);
     this.router.navigate(['/home']);
 
@@ -152,8 +147,13 @@ export class CrearOrden {
 
   }
 
-  confirmarCancelar():void{
-    if(this.authService.login(this.admin, this.password)){
+ async confirmarCancelar():Promise<void>{
+    if(await this.authService.login(this.admin, this.password)){
+      if(this.editar && this.ordenEditar){
+        this.inventarioService.reducirCantidad(1, this.ordenEditar.quesadillas);
+        this.inventarioService.reducirCantidad(2, this.ordenEditar.nuggets);
+        this.ordenService.deleteOrdenEditar();
+      }
       this.router.navigate(['/home']);
     }
     else{

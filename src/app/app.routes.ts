@@ -7,6 +7,8 @@ import { Cajas } from './pages/cajas/cajas';
 import { Administrar } from './pages/administrar/administrar';
 import { Reporte } from './pages/reporte/reporte';
 import { Inventario } from './pages/inventario/inventario';
+import { Usuarios } from './pages/usuarios/usuarios';
+import { Productos } from './pages/productos/productos';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -17,4 +19,6 @@ export const routes: Routes = [
     {path: 'administrar', component: Administrar, canActivate: [authGuard]},
     {path: 'reporte', component: Reporte, canActivate: [authGuard]}, 
     {path: 'inventario', component: Inventario, canActivate: [authGuard]}, 
+    {path: 'usuarios', component: Usuarios, canActivate: [authGuard]},
+    {path: 'productos', component: Productos, canActivate: [authGuard]},
 ];
