@@ -79,6 +79,13 @@ export class InventarioSQ {
     );
   }
 
+  returnCantidad(id: number, cantidad: number): void {
+    this.db.run(
+      `UPDATE inventario SET cantidad = cantidad + ? WHERE id = ?`,
+      [cantidad, id]
+    );
+  }
+
   actualizarProducto(id: number, campos: { precio?: number; cantidad?: number }): void {
     const sets: string[] = [];
     const params: any[] = [];

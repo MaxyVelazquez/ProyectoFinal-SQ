@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {Orden} from '../models/orden.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Ventas } from './ventas';
+import { InventarioSQ } from './inventario-sq';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdenService {
+  private ventasService= inject(Ventas);
+  private inventarioService= inject(InventarioSQ);
 
   private ordenes: Orden[]=[];
   private ordenesPagadas: Orden[]=[];
@@ -29,16 +33,31 @@ export class OrdenService {
   }
 
   crearOrden(quesadillas:number, nuggets:number):void{
-    const orden: Orden={
-      id:this.contOrden++,
+    const quesadilla=this.inventarioService.getProducto(1);
+    const nugget=this.inventarioService.getProducto(2);
+
+    const precioQ=quesadilla?.precio ?? 0;
+    const precioN=nugget?.precio ?? 0;
+    const total=(quesadillas*precioQ) + (nuggets*precioN);
+
+    const ventaId=this.ventasService.crearVentaPendiente(total, [
+        {productoId: 1, cantidad: quesadillas, precioUnitario: precioQ},
+        {productoId: 2, cantidad: nuggets, precioUnitario: precioN}
+    ]);
+
+    this.inventarioService.reducirCantidad(1, quesadillas);
+    this.inventarioService.reducirCantidad(2, nuggets);
+
+    const orden:Orden={
+      id: this.contOrden++,
+      ventaId: ventaId,
       quesadillas,
       nuggets,
-      precioQ:100,
-      precioN:100,
-      total:(quesadillas*100) + (nuggets*100)
-      
+      precioQ,
+      precioN,
+      total
     };
-    
+
     this.ordenes.push(orden);
     this.ordenesSubject.next(orden);
   }
@@ -58,7 +77,7 @@ export class OrdenService {
   setOrden(orden:Orden):boolean{
     const index = this.ordenes.findIndex(o => o.id === orden.id);
     if (index !== -1) {
-      console.log(orden);
+      
       this.ordenes[index] = orden;
       this.ordenesSubject.next(orden);
       return true;
@@ -67,6 +86,20 @@ export class OrdenService {
   }
 
   eliminarOrden(id: number): void {
-    this.ordenes = this.ordenes.filter(orden => orden.id !== id);
+    const orden = this.ordenes.find(o => o.id === id);
+    if(orden){
+      this.ventasService.cancelarVenta(orden.ventaId);
+      this.inventarioService.returnCantidad(1, orden.quesadillas);
+      this.inventarioService.returnCantidad(2, orden.nuggets);
+    }
+    this.ordenes = this.ordenes.filter(o => o.id !== id);
+    const siguiente=this.ordenes.length > 0 ? this.ordenes[0] : undefined;
+    this.ordenesSubject.next(siguiente);
+  }
+
+  eliminarOrdenPagada(id: number): void {
+    this.ordenes = this.ordenes.filter(o => o.id !== id);
+    const siguiente=this.ordenes.length > 0 ? this.ordenes[0] : undefined;
+    this.ordenesSubject.next(siguiente);
   }
 }

@@ -53,10 +53,10 @@ export class Home implements OnInit, OnDestroy {
 
       //Aqui vamos a agregar las quesadillas y nuggets de nuevo al inventario, para que al editar la orden, se pueda modificar la cantidad de quesadillas y nuggets sin que se reste del inventario actual
       //this.inventarioService.setQuesadillas(this.inventarioService.getQuesadillas() + orden.quesadillas);
-      this.inventarioService.setCantidad(1, this.inventarioService.getCantidad(1) + orden.quesadillas);
+      this.inventarioService.returnCantidad(1, orden.quesadillas);
 
       //this.inventarioService.setNugets(this.inventarioService.getNugets() + orden.nuggets);
-      this.inventarioService.setCantidad(2, this.inventarioService.getCantidad(2) + orden.nuggets);
+      this.inventarioService.returnCantidad(2, orden.nuggets);
 
       this.router.navigate(['/crear-orden']);
       
@@ -71,8 +71,8 @@ export class Home implements OnInit, OnDestroy {
     
   }
 
-  eliminarOrden(orden:Orden){
-    if(this.auth.login(this.admin, this.password)){
+  async eliminarOrden(orden:Orden){
+    if(await this.auth.login(this.admin, this.password)){
       if(this.ordenActual){
       this.ordenService.eliminarOrden(orden.id);
       this.ordenes=this.ordenService.getOrdenes();
@@ -104,26 +104,18 @@ export class Home implements OnInit, OnDestroy {
   funcionPagar(){
     if(this.ordenActual && this.pagoCliente!==undefined && this.cambio >= 0){
 
-      const quesadilla = this.inventarioService.getProducto(1);
-      const nugget = this.inventarioService.getProducto(2);
+      this.ventasService.pagarVenta(this.ordenActual.ventaId);
 
-      this.ventasService.registrarVenta(this.ordenActual.total, [
-        { productoId: 1, cantidad: this.ordenActual.quesadillas, precioUnitario: quesadilla?.precio ?? 0 },
-        { productoId: 2, cantidad: this.ordenActual.nuggets, precioUnitario: nugget?.precio ?? 0 }
-      ]);
-
-        this.ordenService.pushOrdenPagada(this.ordenActual!);
-        this.ordenService.eliminarOrden(this.ordenActual.id);
-        this.ordenes = this.ordenService.getOrdenes();
-        this.ordenActual = this.ordenes.length > 0 ? this.ordenes[0] : undefined;
+      this.ordenService.pushOrdenPagada(this.ordenActual);
+      this.ordenService.eliminarOrdenPagada(this.ordenActual.id);
+      this.ordenes=this.ordenService.getOrdenes();
+      this.ordenActual=this.ordenes.length > 0 ? this.ordenes[0] : undefined;
 
 
-        this.mostrarPagar=false;
-        this.pagoCliente=undefined;
-        this.cambio=0;
-
-        this.ordenes=this.ordenService.getOrdenes();
-        this.mostrarPagoExitoso = true;
+      this.mostrarPagar=false;
+      this.pagoCliente=undefined;
+      this.cambio=0;
+      this.mostrarPagoExitoso=true;
       
     }
 
@@ -134,8 +126,7 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    
     this.sub?.unsubscribe();
   }
 

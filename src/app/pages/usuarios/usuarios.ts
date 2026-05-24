@@ -42,9 +42,9 @@ export class Usuarios implements OnInit {
     this.usuarioSeleccionado = usuario;
     this.mostrarModal = true;
   }
-  editarUsuario(){
+  async editarUsuario(){
     if(this.usuarioSeleccionado && this.usuarioSeleccionado.username && this.usuarioSeleccionado.password){
-      this.usersService.updateUser(this.usuarioSeleccionado.id, this.usuarioSeleccionado.username, this.usuarioSeleccionado.password);
+      await this.usersService.updateUser(this.usuarioSeleccionado.id, this.usuarioSeleccionado.username, this.usuarioSeleccionado.password);
       this.getUsuarios();
       this.mostrarModal = false;
     }
@@ -55,9 +55,9 @@ export class Usuarios implements OnInit {
     this.getUsuarios();
   }
 
-  crearUsuario(){
+  async crearUsuario(){
     if(this.nuevoUsername && this.nuevoPassword){
-      this.usersService.setUser(this.nuevoUsername, this.nuevoPassword);
+      await this.usersService.setUser(this.nuevoUsername, this.nuevoPassword);
       this.usuarios = this.usersService.getAllUsers();
       this.mostrarModal = false;
       this.nuevoUsername = '';

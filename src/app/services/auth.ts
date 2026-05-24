@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Users } from './users';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private USER= 'admin';
-  private PASS= '1234';
+  
+  private usersService= inject(Users);
 
-
-  login(username:string, password:string):boolean{
-    if(username === this.USER && password === this.PASS){
+  async login(username:string, password:string): Promise<boolean> {
+    const user = await this.usersService.getUserforLogin(username, password);
+    if(user){
       localStorage.setItem('sesion', 'true');
       localStorage.setItem('usuario', username);
       return true;
@@ -19,6 +20,7 @@ export class AuthService {
 
   logout():void{
     localStorage.removeItem('sesion');
+    localStorage.removeItem('usuario');
 
   }
 
