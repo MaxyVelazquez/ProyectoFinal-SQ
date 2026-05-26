@@ -39,3 +39,10 @@ p{
   transform: scale(1.03);
   background-color: #e0b015;
 }
+
+
+.img-producto {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}

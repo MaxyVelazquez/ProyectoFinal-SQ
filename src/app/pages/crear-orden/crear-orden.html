@@ -68,7 +68,7 @@
             <div class="overlay" *ngIf="mostrarErrorQ">
                 <div class="modal-confirm p-4 text-center">
                     <h4>Sin inventario</h4>
-                    <p class="text-muted">No hay suficientes Quesaurillas. Cantidad máxima: {{inventarioService.getQuesadillas()}}</p>
+                    <p class="text-muted">No hay suficientes Quesaurillas. Cantidad máxima: {{inventarioService.getCantidad(1)}}</p>
                     <div class="d-flex justify-content-center mt-3">
                     <button class="btn-amarillo px-4" (click)="cerrarErrorQ()">Entendido</button>
                     </div>
@@ -79,7 +79,7 @@
             <div class="overlay" *ngIf="mostrarErrorN">
                 <div class="modal-confirm p-4 text-center">
                     <h4>Sin inventario</h4>
-                    <p class="text-muted">No hay suficientes DinoNuggets. Cantidad máxima: {{inventarioService.getNugets()}}</p>
+                    <p class="text-muted">No hay suficientes DinoNuggets. Cantidad máxima: {{inventarioService.getCantidad(2)}}</p>
                     <div class="d-flex justify-content-center mt-3">
                     <button class="btn-amarillo px-4" (click)="cerrarErrorN()">Entendido</button>
                     </div>

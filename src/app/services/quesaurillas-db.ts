@@ -48,7 +48,7 @@ export class QuesaurillasDb {
     this.save();
   }
 
-  private save(): void {
+  save(): void {
     if (!this.db) return;
     const data = this.db.export();
     const base64 = btoa(String.fromCharCode(...data));
@@ -106,4 +106,13 @@ export class QuesaurillasDb {
       )
     `);
   }
+
+
+  runSilent(sql: string, params: any[] = []): void {
+    if (!this.db) throw new Error('Base de datos no inicializada');
+    this.db.run(sql, params);
+  }
+
+
+
 }

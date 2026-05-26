@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="fondo d-flex justify-content-evenly align-items-center vh-100 gap-4">
+  <img src="imagenes/Gragon-Reporte.png" alt="dragon" class="dragon-reporte">
   <div class="card-grafica p-2 text-center">
     <h2  class="my-3">Este mes</h2>
     <canvas class="mx-4" baseChart
@@ -8,6 +9,26 @@
       [options]="lineChartOptions"
       type="line">
     </canvas>
-    <!-- <button class="btn-detalles w-75 mt-4" >Detalles</button> -->
+    <button class="btn-detalles w-75 mt-4" (click)="verDetalles()">Detalles</button>
   </div>
+
+  <div class="card-grafica p-2 text-center">
+    <h2  class="my-3">Hoy</h2>
+    <br><br>
+    <div class="d-flex justify-content-between px-5 my-2">
+      <h3>Quesaurillas</h3>
+      <h3>{{ quesadillasHoy }}</h3>
+    </div>
+    <br>
+    <div class="d-flex justify-content-between px-5 my-2">
+      <h3>DinoNugets</h3>
+      <h3>{{ nugetsHoy }}</h3>
+    </div>
+    <br>
+    <div class="d-flex justify-content-between px-5 my-2">
+      <h3>Total</h3>
+      <h3>{{ totalHoy }}</h3>
+    </div>
+    <img src="imagenes/dinoGo.png" alt="dinoGo" class="dino-Go">
+    <button class="btn-detalles w-75 mt-4" (click)="verDetallesHoy()">Detalles</button>
 </div>

@@ -54,15 +54,17 @@ export class Ventas {
   }
 
   crearVentaPendiente(total: number, detalle: {productoId: number, cantidad: number, precioUnitario: number}[]): number {
-    this.db.run(`INSERT INTO ventas(total, estado) VALUES (?, 'pendiente')`, [total]);
+    this.db.runSilent(`INSERT INTO ventas(total, estado) VALUES (?, 'pendiente')`, [total]);
     const resultado = this.db.query<{id: number}>(`SELECT last_insert_rowid() as id`);
     const ventaId = resultado[0].id;
     for(const item of detalle){
-      this.db.run(
+      this.db.runSilent(
         `INSERT INTO detalleVentas (ventaId, productoId, cantidad, precioUnitario) VALUES (?,?,?,?)`,
         [ventaId, item.productoId, item.cantidad, item.precioUnitario]
       );
     }
+
+    this.db.save();
     return ventaId;
   }
   
@@ -71,6 +73,18 @@ export class Ventas {
   }
   cancelarVenta(ventaId: number): void {
     this.db.run(`UPDATE ventas SET estado = 'cancelada' WHERE id = ?`, [ventaId]);
+  }
+
+  getVentasHoy(): VentaCompleta[] {
+    const hoy = new Date().toISOString().split('T')[0]; // '2026-05-26'
+    const ventas = this.db.query<Venta>(
+      `SELECT * FROM ventas WHERE estado = 'pagada' AND date(fecha) = ?`,
+      [hoy]
+    );
+    return ventas.map(venta => ({
+      ...venta,
+      detalle: this.getDetalleVenta(venta.id)
+    }));
   }
 
 
