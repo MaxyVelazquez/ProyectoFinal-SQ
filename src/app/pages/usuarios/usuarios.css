@@ -151,3 +151,39 @@
 .opcion-borrar:hover {
   background-color: #fff0f0;
 }
+
+
+.toast-alert {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.toast-alert.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FCEBEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toast-icon i { color: #A32D2D; font-size: 15px; }

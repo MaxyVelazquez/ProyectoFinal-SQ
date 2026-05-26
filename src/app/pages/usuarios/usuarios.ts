@@ -25,8 +25,18 @@ export class Usuarios implements OnInit {
   nuevoPassword:string = '';
   usuarioSeleccionado:any = null;
   menuPosicion = { top: 0, left: 0 };
+  mostrarToast: boolean = false;
+  mensajeToast: string = '';
+  private toastTimer: any;
 
   constructor(private usersService: Users) {}
+
+  toast(mensaje: string) {
+    this.mensajeToast = mensaje;
+    this.mostrarToast = true;
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => this.mostrarToast = false, 2800);
+  }
 
   abrirModalCrear(){
     this.usuarioSeleccionado = null;
@@ -39,18 +49,30 @@ export class Usuarios implements OnInit {
   }
 
   mostrarEditar(usuario:any){
+    this.menuAbierto = null;
+    if (usuario.id === 1) {
+      this.toast('No se puede editar este usuario.');
+      return;
+    }
     this.usuarioSeleccionado = usuario;
+    this.nuevoUsername = usuario.username;
+    this.nuevoPassword = '';
     this.mostrarModal = true;
   }
   async editarUsuario(){
-    if(this.usuarioSeleccionado && this.usuarioSeleccionado.username && this.usuarioSeleccionado.password){
-      await this.usersService.updateUser(this.usuarioSeleccionado.id, this.usuarioSeleccionado.username, this.usuarioSeleccionado.password);
+    if(this.usuarioSeleccionado && this.nuevoUsername && this.nuevoPassword){
+      await this.usersService.updateUser(this.usuarioSeleccionado.id, this.nuevoUsername, this.nuevoPassword);
       this.getUsuarios();
       this.mostrarModal = false;
     }
   }
 
    borrarUsuario(usuario:any){
+    this.menuAbierto = null;
+    if (usuario.id===1) {
+      this.toast('No se puede eliminar este usuario.');
+      return;
+    }
     this.usersService.deleteUser(usuario.id);
     this.getUsuarios();
   }

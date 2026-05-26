@@ -22,9 +22,19 @@ export class Productos implements OnInit{
   nuevoPrecio:number | null = null;
   nuevaCantidad:number | null = null;
   menuPosicion = { top: 0, left: 0 };
+  mostrarToast: boolean = false;
+  mensajeToast: string = '';
+  private toastTimer: any;
+
   constructor(private auth: AuthService, private router: Router, public inventarioService: InventarioSQ) {}
   ngOnInit(): void {
     this.getProductos();
+  }
+  toast(mensaje: string) {
+    this.mensajeToast = mensaje;
+    this.mostrarToast = true;
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => this.mostrarToast = false, 2800);
   }
 
  toggleMenu(id: number, event: MouseEvent) {
@@ -46,18 +56,28 @@ export class Productos implements OnInit{
   }
 
   mostrarEditar(producto:any){
-    this.productoSeleccionado = producto;
+    this.menuAbierto = null;
+    
+    this.productoSeleccionado = { ...producto };
+    this.nuevoProducto = producto.producto;  
+    this.nuevoPrecio = producto.precio;    
+    this.nuevaCantidad = producto.cantidad;
     this.mostrarModal = true;
   }
 
   borrarProducto(producto:any){
+    this.menuAbierto = null;
+    if(producto.id===1 || producto.id===2){
+      this.toast("No se puede eliminar este producto");
+      return;
+    }
     this.inventarioService.deleteProducto(producto.id);
     this.getProductos();
   }
 
   editarProducto(){
-    if(this.productoSeleccionado && this.productoSeleccionado.nombre && this.productoSeleccionado.precio && this.productoSeleccionado.cantidad){
-      this.inventarioService.actualizarProducto(this.productoSeleccionado.id, {precio: this.productoSeleccionado.precio, cantidad: this.productoSeleccionado.cantidad});
+    if(this.productoSeleccionado && this.nuevoProducto && this.nuevoPrecio !== null && this.nuevaCantidad !== null){
+      this.inventarioService.actualizarProducto(this.productoSeleccionado.id, {precio: this.nuevoPrecio, cantidad: this.nuevaCantidad});
       this.getProductos();
       this.mostrarModal = false;
     }
