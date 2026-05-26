@@ -11,7 +11,7 @@ export interface User{
   providedIn: 'root',
 })
 export class Users {
-  private db = inject(QuesaurillasDb);
+  readonly db = inject(QuesaurillasDb);
 
   async hashPassword(password: string): Promise<string> {
     const encoder= new TextEncoder();

@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import {CommonModule} from '@angular/common';
+import {NgIf} from '@angular/common';
 import {inject} from '@angular/core';
+
+
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -29,6 +33,10 @@ export class Navbar {
    logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
+  }
+
+  get esAdmin(): boolean {
+    return this.auth.getUser().toLowerCase() === 'admin';
   }
 
   
