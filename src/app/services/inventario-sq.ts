@@ -3,7 +3,7 @@ import { QuesaurillasDb } from './quesaurillas-db';
 
 export interface Producto{
   id: number;
-  nombre: string;
+  producto: string;
   precio: number;
   cantidad: number;
 }

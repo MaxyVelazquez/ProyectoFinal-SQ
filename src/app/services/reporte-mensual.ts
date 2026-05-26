@@ -14,7 +14,7 @@ export class ReporteMensual {
     const agrupado: { [dia: string]: { quesadillas: number, nuggets: number, total: number } } = {};
 
     for (const venta of reporte) {
-      const dia = new Date(venta.fecha).getDate().toString();
+      const dia = new Date(venta.fecha.replace(' ', 'T')).getDate().toString();
 
       if (!agrupado[dia]) {
         agrupado[dia] = { quesadillas: 0, nuggets: 0, total: 0 };

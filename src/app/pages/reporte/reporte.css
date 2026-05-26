@@ -1,11 +1,22 @@
 .fondo{
     background-color: #5271ff;
     font-family: 'Bryndan Write', sans-serif;
+    position: relative;
+}
+
+.dragon-reporte {
+  position: absolute;
+  width: 670px;
+  z-index: 0;
 }
 
 h2{
     color: white;
     font-size: 2.8rem;
+}
+
+h3{
+  color: white;
 }
 
 .card-grafica {
@@ -15,6 +26,8 @@ h2{
   width: 600px;
   height: 500px;
   box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
 }
 
 .btn-detalles {
@@ -30,9 +43,21 @@ h2{
   cursor: pointer;
   transition: transform 0.1s;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 3;
 }
 
 .btn-detalles:hover {
   transform: scale(1.03);
   background-color: #e0b015;
 }
+
+
+.dino-Go {
+  position: absolute;
+  width: 150px;
+  z-index: 2;
+  right: 100px;
+  transform: translateY(-48.5px);
+}
+
+
